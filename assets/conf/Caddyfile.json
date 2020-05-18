@@ -1,0 +1,85 @@
+{
+    "logging": {
+        "logs": {
+            "default": {
+                "level": "DEBUG"
+            }
+        }
+    },
+    "apps": {
+        "http": {
+            "http_port": 9080,
+            "servers": {
+                "srv0": {
+                    "listen": [
+                        ":9080"
+                    ],
+                    "routes": [
+                        {
+                            "match": [
+                                {
+                                    "path": [
+                                        "/"
+                                    ]
+                                }
+                            ],
+                            "handle": [
+                                {
+                                    "handler": "static_response",
+                                    "status_code": 200,
+                                    "body": "hello world"
+                                }
+                            ],
+                            "terminal": true
+                        },
+                        {
+                            "handle": [
+                                {
+                                    "handler": "authentication",
+                                    "providers": {
+                                        "reauth": {
+                                            "backends": [
+                                                {
+                                                    "type": "simple",
+                                                    "credentials": {
+                                                        "username": "password"
+                                                    }
+                                                }
+                                            ],
+                                            "failure": {
+                                                "mode": "status",
+                                                "code": 403
+                                            }
+                                        }
+                                    }
+                                },
+                                {
+                                    "handler": "static_response",
+                                    "status_code": 200,
+                                    "body": "tell no-one"
+                                }
+                            ],
+                            "match": [
+                                {
+                                    "path": [
+                                        "/secret"
+                                    ]
+                                }
+                            ],
+                            "terminal": true
+                        }
+                    ],
+                    "tls_connection_policies": [
+                        {
+                            "certificate_selection": {
+                                "any_tag": [
+                                    "cert0"
+                                ]
+                            }
+                        }
+                    ]
+                }
+            }
+        }
+    }
+}
