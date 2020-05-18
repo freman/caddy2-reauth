@@ -1,6 +1,7 @@
 vendor/**
 bin/**
 .coverage/**
+coverage.out
 .doc/**
 *TODO*
 123*
