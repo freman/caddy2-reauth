@@ -1,4 +1,4 @@
-# caddy-auth-forms
+# caddy2-reauth
 
 [![testify](https://github.com/freman/caddy2-reauth/workflows/testify/badge.svg?branch=master)](https://github.com/freman/caddy2-reauth/actions/)
 [![Coverage Status](https://coveralls.io/repos/github/freman/caddy2-reauth/badge.svg?branch=master)](https://coveralls.io/github/freman/caddy2-reauth?branch=master)
