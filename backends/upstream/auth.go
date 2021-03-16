@@ -51,6 +51,8 @@ type Upstream struct {
 	InsecureSkipVerify bool               `json:"insecure_skip_verify,omitempty"`
 	FollowRedirects    bool               `json:"follow_redirects,omitempty"`
 	PassCookies        bool               `json:"pass_cookies,omitempty"`
+	PassTargetURL      bool               `json:"pass_target_url,omitempty"`
+	PassMethod         bool               `json:"pass_method,omitempty"`
 	Match              *jsontypes.Regexp  `json:"match,omitempty"`
 
 	Forward struct {
@@ -116,6 +118,14 @@ func (h Upstream) Authenticate(r *http.Request) (string, error) {
 	}
 
 	h.copyRequest(r, req)
+
+	if h.passTargetURL {
+		req.Header.Add("X-Auth-URL", r.RequestURI)
+	}
+
+	if h.passMethod {
+		req.Header.Add("X-Auth-Method", r.Method)
+	}
 
 	resp, err := c.Do(req)
 	if err != nil {
